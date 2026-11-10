@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Findit – Lost Something? Find It Here!</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar">
+  <a href="#home" class="logo" data-nav="home">🔍 Find<span>It</span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  <nav id="navLinks">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#browse" data-nav="browse">Browse Items</a>
+    <a href="#lost" data-nav="lost">Report Lost</a>
+    <a href="#found" data-nav="found">Report Found</a>
+    <a href="#myreports" data-nav="myreports">My Reports</a>
+    <a href="#how" data-nav="how">How It Works</a>
+    <a href="#contact" data-nav="contact">Contact Us</a>
+    <a href="#admin" data-nav="admin" id="adminLink" class="hidden">Admin</a>
+    <button class="icon-btn" id="themeBtn" title="Toggle dark mode">🌙</button>
+    <button class="btn btn-sm" id="authBtn">Login / Sign Up</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div class="hero-bg">
+      <span style="--x:8%;--y:20%;--s:3rem">🎒</span>
+      <span style="--x:85%;--y:15%;--s:3.5rem">📱</span>
+      <span style="--x:15%;--y:75%;--s:2.8rem">🔑</span>
+      <span style="--x:78%;--y:70%;--s:3.2rem">🪪</span>
+      <span style="--x:50%;--y:8%;--s:2.4rem">🎧</span>
+      <span style="--x:92%;--y:45%;--s:2.4rem">💧</span>
+      <span style="--x:3%;--y:48%;--s:2.4rem">⌚</span>
+    </div>
+    <div class="hero-content">
+      <h1>Find<span>It</span></h1>
+      <p class="tagline">Lost Something? Find It Here!</p>
+      <p class="sub">FindIt connects students who lost belongings with students who found them — quickly, safely and on campus.</p>
+      <form class="search-bar" id="heroSearch">
+        <input type="text" id="heroSearchInput" placeholder="Search by item name or location (e.g. wallet, Library)…">
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div class="hero-buttons">
+        <a href="#lost" class="btn btn-danger" data-nav="lost">😟 Report Lost Item</a>
+        <a href="#found" class="btn btn-success" data-nav="found">😊 Report Found Item</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-grid" id="homeStats"></div>
+
+    <h2 class="section-title">Recently Reported Items</h2>
+    <div class="cards" id="recentItems"></div>
+    <p class="center"><a href="#browse" class="btn btn-outline" data-nav="browse">View All Items →</a></p>
+
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="cat-grid" id="categoryGrid"></div>
+
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps" id="homeSteps"></div>
+
+    <div class="community">
+      <h2>🤝 Your Campus, Your Community</h2>
+      <p>Every lost ID card, calculator or water bottle is more than an object — it is someone's day disrupted. FindIt lets students help each other recover belongings. Found something? Report it in 30 seconds. Lost something? Chances are another student already picked it up.</p>
+    </div>
+
+    <div class="stats-grid" style="margin-top:2rem">
+      <div class="stat-card green big"><div class="icon">🏆</div><div class="num" id="returnCounter">0</div><div>belongings successfully returned to students</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BROWSE ============ -->
+<section class="page" id="page-browse">
+  <div class="container">
+    <h2 class="section-title left">Browse Items</h2>
+    <div class="filters">
+      <input type="text" id="fSearch" placeholder="🔎 Search item, category or location…">
+      <select id="fCategory"></select>
+      <select id="fType">
+        <option value="">Lost &amp; Found</option>
+        <option value="Lost">Lost</option>
+        <option value="Found">Found</option>
+      </select>
+      <select id="fSort">
+        <option value="new">Recently reported</option>
+        <option value="old">Oldest first</option>
+        <option value="name">Name (A–Z)</option>
+      </select>
+    </div>
+    <p id="resultCount" class="muted"></p>
+    <div class="cards" id="browseItems"></div>
+  </div>
+</section>
+
+<!-- ============ REPORT LOST ============ -->
+<section class="page" id="page-lost">
+  <div class="container narrow">
+    <h2 class="section-title left">😟 Report a Lost Item</h2>
+    <form class="form-card" id="lostForm">
+      <div class="grid2">
+        <label>Item Name *<input name="name" required placeholder="e.g. Blue Backpack"></label>
+        <label>Category *<select name="category" class="catSelect" required></select></label>
+      </div>
+      <label>Description *<textarea name="description" rows="3" required placeholder="Brand, colour, size, anything special…"></textarea></label>
+      <div class="grid3">
+        <label>Lost Date *<input type="date" name="date" required class="dateInput"></label>
+        <label>Approx. Time<input type="time" name="time"></label>
+        <label>Urgency Level
+          <select name="urgency"><option>Low</option><option selected>Medium</option><option>High</option></select>
+        </label>
+      </div>
+      <label>Lost Location *
+        <select name="location" class="locSelect" required></select>
+      </label>
+      <label>Additional Identifying Details<textarea name="identifying" rows="2" placeholder="Scratches, stickers, name written inside, serial no. etc."></textarea></label>
+      <label>Upload Image (optional)<input type="file" name="image" accept="image/*"></label>
+      <div class="grid2">
+        <label>Contact Email *<input type="email" name="email" required placeholder="you@college.edu"></label>
+        <label>Contact Number (optional)<input type="tel" name="phone" placeholder="10-digit number"></label>
+      </div>
+      <button class="btn btn-danger" type="submit">Submit Lost Report</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ REPORT FOUND ============ -->
+<section class="page" id="page-found">
+  <div class="container narrow">
+    <h2 class="section-title left">😊 Report a Found Item</h2>
+    <form class="form-card" id="foundForm">
+      <div class="grid2">
+        <label>Found Item Name *<input name="name" required placeholder="e.g. Black Wallet"></label>
+        <label>Item Category *<select name="category" class="catSelect" required></select></label>
+      </div>
+      <div class="grid2">
+        <label>Found Location *<select name="location" class="locSelect" required></select></label>
+        <label>Found Date *<input type="date" name="date" required class="dateInput"></label>
+      </div>
+      <label>Where is the item currently kept? *
+        <select name="kept" required>
+          <option value="">Select…</option>
+          <option>With the student who found it</option>
+          <option>College security office</option>
+          <option>Lost &amp; Found department</option>
+          <option>Other location</option>
+        </select>
+      </label>
+      <label>Additional Information<textarea name="description" rows="3" placeholder="Describe the item. Keep one detail private so the owner can prove ownership."></textarea></label>
+      <label>Upload Photograph<input type="file" name="image" accept="image/*"></label>
+      <label>Contact Email *<input type="email" name="email" required placeholder="you@college.edu"></label>
+      <button class="btn btn-success" type="submit">Submit Found Report</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ CLAIM ============ -->
+<section class="page" id="page-claim">
+  <div class="container narrow">
+    <h2 class="section-title left">🙋 Claim an Item</h2>
+    <div class="notice">🔐 To protect owners, you must describe details that only the real owner would know. The item will be handed over only after verification.</div>
+    <form class="form-card" id="claimForm">
+      <div class="grid2">
+        <label>Item Name<input name="itemName" id="claimItemName" readonly></label>
+        <label>Item ID<input name="itemId" id="claimItemId" required placeholder="e.g. FI-0003"></label>
+      </div>
+      <div class="grid2">
+        <label>Claimant's Name *<input name="claimant" required></label>
+        <label>Registration Number *<input name="regno" required></label>
+      </div>
+      <label>College Email *<input type="email" name="email" required placeholder="you@college.edu"></label>
+      <label>Description of Ownership *<textarea name="ownership" rows="3" required placeholder="Where and when did you lose it? What was inside / on it?"></textarea></label>
+      <label>Identifying Details of the Item *<textarea name="identifying" rows="3" required placeholder="Colour, marks, contents, lock-screen, serial number…"></textarea></label>
+      <button class="btn" type="submit">Submit Claim Request</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ MY REPORTS ============ -->
+<section class="page" id="page-myreports">
+  <div class="container">
+    <h2 class="section-title left">📋 My Reports</h2>
+    <div id="myReportsLoggedOut" class="notice hidden">Please <a href="#" id="openLoginLink">log in</a> to see your reports.</div>
+    <div id="myReportsContent">
+      <div class="tabs">
+        <button class="tab active" data-tab="lost">Items I Lost</button>
+        <button class="tab" data-tab="found">Items I Found</button>
+        <button class="tab" data-tab="claims">My Claims</button>
+        <button class="tab" data-tab="notif">Notifications</button>
+      </div>
+      <div id="myReportsBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS + FAQ + SAFETY ============ -->
+<section class="page" id="page-how">
+  <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps" id="howSteps"></div>
+
+    <h2 class="section-title">❓ Frequently Asked Questions</h2>
+    <div class="faq">
+      <details><summary>How can I report a lost item?</summary><p>Click “Report Lost”, fill in the item details, location and your contact email, then submit. You get a unique Item ID.</p></details>
+      <details><summary>How do I claim my belongings?</summary><p>Find your item in Browse Items, open its details and press “Claim This Item”. Provide ownership details; our team verifies them before handing the item over.</p></details>
+      <details><summary>Is registration necessary?</summary><p>You can browse without an account. To track reports in “My Reports” and receive notifications, please sign up with your college email.</p></details>
+      <details><summary>Can I upload photographs?</summary><p>Yes. Photos are optional for lost items and recommended for found items (avoid showing sensitive numbers).</p></details>
+      <details><summary>How can I contact someone who found my item?</summary><p>Submit a claim request. Once approved, you will be told where to collect the item — details are never shown publicly.</p></details>
+    </div>
+
+    <h2 class="section-title">🛡️ Safety Guidelines</h2>
+    <div class="safety">
+      <div>🔒 Never share passwords or OTPs.</div>
+      <div>✅ Verify ownership before returning valuable items.</div>
+      <div>📍 Meet at a designated campus location (security office, library desk).</div>
+      <div>🙈 Avoid sharing sensitive personal information publicly.</div>
+    </div>
+
+    <h2 class="section-title">💬 Feedback</h2>
+    <form class="form-card narrow-card" id="feedbackForm">
+      <label>Your suggestion<textarea name="msg" rows="3" required placeholder="How can we improve FindIt?"></textarea></label>
+      <button class="btn" type="submit">Send Feedback</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="page" id="page-contact">
+  <div class="container narrow">
+    <h2 class="section-title left">📞 Contact Us</h2>
+    <div class="form-card">
+      <p>📧 support@findit.college.edu &nbsp;|&nbsp; 📍 Lost &amp; Found Desk, Admin Block &nbsp;|&nbsp; 🕘 Mon–Sat, 9 AM – 5 PM</p>
+      <form id="contactForm">
+        <div class="grid2">
+          <label>Name<input name="name" required></label>
+          <label>Email<input type="email" name="email" required></label>
+        </div>
+        <label>Message<textarea name="msg" rows="4" required></textarea></label>
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADMIN ============ -->
+<section class="page" id="page-admin">
+  <div class="container">
+    <h2 class="section-title left">🛠️ Admin Panel</h2>
+    <div class="stats-grid" id="adminStats"></div>
+    <h3>Pending Claim Requests</h3>
+    <div class="table-wrap"><table id="claimsTable"></table></div>
+    <h3>All Reports</h3>
+    <div class="table-wrap"><table id="itemsTable"></table></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>🔍 FindIt — Lost Something? Find It Here! &nbsp;•&nbsp; Built for our campus community</p>
+  <p class="muted">Demo project: data is stored in your browser (localStorage).</p>
+</footer>
+
+<!-- ============ MODALS ============ -->
+<div class="modal" id="detailModal"><div class="modal-box"><button class="close" data-close>✕</button><div id="detailBody"></div></div></div>
+
+<div class="modal" id="authModal">
+  <div class="modal-box small">
+    <button class="close" data-close>✕</button>
+    <div class="tabs">
+      <button class="tab active" data-auth="login">Login</button>
+      <button class="tab" data-auth="signup">Sign Up</button>
+    </div>
+    <form id="authForm" class="form-card flat">
+      <label id="nameRow" class="hidden">Full Name<input name="name"></label>
+      <label>College Email<input type="email" name="email" required></label>
+      <label>Password<input type="password" name="password" required minlength="4"></label>
+      <button class="btn" type="submit" id="authSubmit">Login</button>
+      <p class="muted">Admin demo: admin@findit.edu / admin123</p>
+    </form>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
